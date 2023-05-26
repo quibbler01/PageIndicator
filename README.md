@@ -1,2 +1,2 @@
-# pageindicator
-pageindicator
+# PageIndicator
+PageIndicator
