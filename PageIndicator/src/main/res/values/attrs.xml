@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PageIndicator">
+
+        <attr name="piSize1" format="float" />
+        <attr name="piSize2" format="float" />
+        <attr name="piSize3" format="float" />
+        <attr name="piSize4" format="float" />
+        <attr name="piSize5" format="float" />
+        <attr name="piSize6" format="float" />
+
+        <attr name="piDotSpacing" format="dimension" />
+
+        <attr name="piCentered" format="boolean" />
+
+        <attr name="piDotBound" format="dimension" />
+
+        <attr name="piInitialPadding" format="dimension" />
+
+        <attr name="piAnimDuration" format="integer" />
+        <attr name="piDefaultColor" format="color" />
+        <attr name="piSelectedColor" format="color" />
+
+        <attr name="piAnimInterpolator" format="reference" />
+    </declare-styleable>
+
+</resources>
