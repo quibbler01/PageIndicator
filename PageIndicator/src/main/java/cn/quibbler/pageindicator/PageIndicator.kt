@@ -3,6 +3,7 @@ package cn.quibbler.pageindicator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
@@ -12,6 +13,8 @@ import android.view.animation.Interpolator
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import kotlin.math.max
+import kotlin.math.min
 
 class PageIndicator constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) :
     View(context, attrs, defStyleAttr, defStyleRes), TargetScrollListener {
@@ -105,6 +108,32 @@ class PageIndicator constructor(context: Context, attrs: AttributeSet?, defStyle
         a?.recycle()
     }
 
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        setMeasuredDimension(4 * (dotSize + dotSpacing) + dotBound + initialPadding, dotSize)
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+
+        var paddingStart = initialPadding
+        val (start, end) = getDrawingRange()
+
+        paddingStart += (dotSize + dotSpacing) * start
+        (start until end).forEach {
+            canvas?.drawCircle(
+                paddingStart + dotSize / 2f - scrollAmount,
+                dotSize / 2f,
+                dotSizes[it] / 2f,
+                when (dotManager?.dots?.get(it)) {
+                    BYTE_6 -> selectedPaint
+                    else -> defaultPaint
+                }
+            )
+            paddingStart += dotSize + dotSpacing
+        }
+    }
+
     override fun scrollToTarget(target: Int) {
 
     }
@@ -115,6 +144,12 @@ class PageIndicator constructor(context: Context, attrs: AttributeSet?, defStyle
 
     fun swipeNext() {
 
+    }
+
+    private fun getDrawingRange(): Pair<Int, Int> {
+        val start = max(0, (dotManager?.selectedIndex ?: 0) - MOST_VISIBLE_COUNT)
+        val end = min(dotManager?.dots?.size ?: 0, (dotManager?.selectedIndex ?: 0) + MOST_VISIBLE_COUNT)
+        return Pair(start, end)
     }
 
 }
