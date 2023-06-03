@@ -158,15 +158,44 @@ class PageIndicator constructor(context: Context, attrs: AttributeSet?, defStyle
     }
 
     override fun scrollToTarget(target: Int) {
-
+        scrollAnimator?.cancel()
+        scrollAnimator = ValueAnimator.ofInt(scrollAmount, target).apply {
+            duration = animDuration
+            interpolator = DEFAULT_INTERPOLATOR
+            addUpdateListener { animation ->
+                scrollAmount = animation.animatedValue as Int
+                invalidate()
+            }
+            start()
+        }
     }
 
     fun swipePrevious() {
-
+        dotManager?.goToPrevious()
+        animateDots()
     }
 
     fun swipeNext() {
+        dotManager?.goToNext()
+        animateDots()
+    }
 
+    private fun animateDots() {
+        dotManager?.let {
+            val (start, end) = getDrawingRange()
+            (start until end).forEach { index ->
+                dotAnimators[index].cancel()
+                dotAnimators[index] = ValueAnimator.ofInt(dotSizes[index], it.dotSizeFor(it.dots[index])).apply {
+                    duration = animDuration
+                    interpolator = DEFAULT_INTERPOLATOR
+                    addUpdateListener { animation ->
+                        dotSizes[index] = animation.animatedValue as Int
+                        invalidate()
+                    }
+                }
+                dotAnimators[index].start()
+            }
+        }
     }
 
     private fun getDrawingRange(): Pair<Int, Int> {
