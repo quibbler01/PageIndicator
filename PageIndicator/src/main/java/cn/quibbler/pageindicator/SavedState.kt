@@ -10,6 +10,8 @@ class SavedState : BaseSavedState {
 
     var selectedIndex = 0
 
+    constructor(superState: Parcelable) : super(superState)
+
     constructor(source: Parcel?) : this(source, null) {
         count = source?.readInt() ?: 0
         selectedIndex = source?.readInt() ?: 0

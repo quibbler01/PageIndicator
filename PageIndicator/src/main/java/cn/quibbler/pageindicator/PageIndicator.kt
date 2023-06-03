@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -131,6 +132,28 @@ class PageIndicator constructor(context: Context, attrs: AttributeSet?, defStyle
                 }
             )
             paddingStart += dotSize + dotSpacing
+        }
+    }
+
+    override fun onSaveInstanceState(): Parcelable? {
+        val superState = super.onSaveInstanceState() ?: return null
+        val savedState = SavedState(superState)
+        savedState.count = this.count
+        savedState.selectedIndex = this.dotManager?.selectedIndex ?: 0
+        return savedState
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        if (state !is SavedState) {
+            super.onRestoreInstanceState(state)
+            return
+        }
+
+        super.onRestoreInstanceState(state.superState)
+
+        this.count = state.count
+        for (i in 0 until state.selectedIndex) {
+            swipeNext()
         }
     }
 
