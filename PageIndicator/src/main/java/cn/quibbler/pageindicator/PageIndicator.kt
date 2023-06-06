@@ -20,6 +20,25 @@ import kotlin.math.min
 class PageIndicator constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) :
     View(context, attrs, defStyleAttr, defStyleRes), TargetScrollListener {
 
+    val flag: Boolean = false
+
+    init {
+        Runnable {
+            if (flag) return@Runnable
+            //task
+        }
+        //others
+    }
+
+    init {
+        //init two
+    }
+
+    init {
+        //init three
+    }
+
+
     companion object {
         private const val BYTE_1 = 1.toByte()
         private const val BYTE_2 = 2.toByte()
