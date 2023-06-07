@@ -53,6 +53,14 @@ class DotManager(
         }
     }
 
+    fun goToNextSmall() {
+
+    }
+
+    fun goToNextLarge() {
+
+    }
+
     fun toToPrevious() {
         if (selectedIndex == 0) {
             return
@@ -65,6 +73,14 @@ class DotManager(
         } else {
             goToPreviousLarge()
         }
+    }
+
+    fun goToPreviousSmall() {
+
+    }
+
+    fun goToPreviousLarge() {
+
     }
 
 }
