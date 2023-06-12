@@ -53,12 +53,12 @@ class DotManager(
         }
     }
 
-    fun goToNextSmall() {
+    private fun goToNextSmall() {
         dots[selectedIndex] = 6
         dots[selectedIndex - 1] = 5
     }
 
-    fun goToNextLarge() {
+    private fun goToNextLarge() {
         //swap 6 and 5
         dots[selectedIndex] = 6
         dots[selectedIndex - 1] = 5
@@ -110,12 +110,47 @@ class DotManager(
         }
     }
 
-    fun goToPreviousSmall() {
-
+    private fun goToPreviousSmall() {
+        dots[selectedIndex] = 6
+        dots[selectedIndex + 1] = 5
     }
 
-    fun goToPreviousLarge() {
+    private fun goToPreviousLarge() {
+        // swap 6 and 5
+        dots[selectedIndex] = 6
+        dots[selectedIndex + 1] = 5
 
+        //no more than 3 5's in a row backward
+        if (selectedIndex < dots.size - 4
+            && dots[selectedIndex + 1] == 5.toByte()
+            && dots[selectedIndex + 2] == 5.toByte()
+            && dots[selectedIndex + 3] == 5.toByte()
+            && dots[selectedIndex + 4] == 5.toByte()
+        ) {
+            dots[selectedIndex + 4] = 4
+            if (selectedIndex + 5 < dots.size) {
+                dots[selectedIndex + 5] = 2
+                (selectedIndex + 6 until dots.size)
+                    .takeWhile { dots[it] != 0.toByte() }
+                    .forEach { i -> dots[i] = 0 }
+            }
+        }
+
+        //6 must be around 3 or higher
+        if (selectedIndex - 1 > 0 && dots[selectedIndex - 1] < 3) {
+            dots[selectedIndex - 1] = 3
+            //set the next one to 1 if any
+            if (selectedIndex - 2 >= 0 && dots[selectedIndex - 2] < 1) {
+                dots[selectedIndex - 2] = 1
+            }
+        }
+
+        //Scroll to keep the selected dot within bound
+        val startBound = selectedIndex * (dotSize + dotSpacing)
+        if (startBound < scrollAmount) {
+            scrollAmount = selectedIndex * (dotSize + dotSpacing)
+            targetScrollListener?.scrollToTarget(scrollAmount)
+        }
     }
 
 }
