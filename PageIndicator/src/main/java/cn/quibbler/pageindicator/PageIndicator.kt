@@ -85,7 +85,23 @@ class PageIndicator constructor(context: Context, attrs: AttributeSet?, defStyle
 
     var count: Int = 0
         set(value) {
-            dotManager = DotManager()
+            dotManager = DotManager(value, dotSize, dotSpacing, dotBound, dotSizeMap, this)
+
+            dotSizes = IntArray(value)
+            dotManager?.let { it.dots.forEachIndexed { index, byte -> dotSizes[index] = it.dotSizeFor(byte) } }
+            dotAnimators = Array(value) { ValueAnimator() }
+
+            initialPadding = when {
+                !centered -> 0
+                customInitalPadding != -1 -> customInitalPadding
+                else -> when (value) {
+                    in 0..4 -> (dotBound + (4 - value) * (dotSize + dotSpacing) + dotSpacing) / 2
+                    else -> 2 * (dotSize + dotSpacing)
+                }
+            }
+
+            field = value
+            invalidate()
         }
 
     constructor(context: Context) : this(context, null)
