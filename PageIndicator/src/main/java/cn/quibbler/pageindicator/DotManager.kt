@@ -53,6 +53,20 @@ class DotManager(
         }
     }
 
+    fun goToPrevious() {
+        if (selectedIndex == 0) {
+            return
+        }
+
+        --selectedIndex
+
+        if (dots.size <= SIZE_THRESHOLD) {
+            goToPreviousSmall()
+        } else {
+            goToPreviousLarge()
+        }
+    }
+
     private fun goToNextSmall() {
         dots[selectedIndex] = 6
         dots[selectedIndex - 1] = 5
