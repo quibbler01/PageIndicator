@@ -7,6 +7,10 @@ android {
     namespace 'cn.quibbler.pageindicator'
     compileSdk 33
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "cn.quibbler.pageindicator"
         minSdk 24
