@@ -13,6 +13,7 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.Interpolator
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import kotlin.math.max
 import kotlin.math.min
@@ -184,6 +185,26 @@ class PageIndicator constructor(context: Context, attrs: AttributeSet?, defStyle
             }
             start()
         }
+    }
+
+    infix fun attachTo(recyclerView: RecyclerView) {
+        if (::scrollListener.isInitialized) {
+            recyclerView.removeOnScrollListener(scrollListener)
+        }
+        count = recyclerView.adapter?.itemCount ?: 0
+        scrollListener = ScrollListener(this)
+        recyclerView.addOnScrollListener(scrollListener)
+        scrollToTarget(0)
+    }
+
+    infix fun attachTo(viewPager: ViewPager) {
+        if (::pageChangeListener.isInitialized) {
+            viewPager.removeOnPageChangeListener(pageChangeListener)
+        }
+        count = (viewPager.adapter as PagerAdapter).count
+        pageChangeListener = PageChangeListener(this)
+        viewPager.addOnPageChangeListener(pageChangeListener)
+        scrollToTarget(0)
     }
 
     fun swipePrevious() {
