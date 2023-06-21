@@ -1,8 +1,9 @@
 package cn.quibbler.pageindicator
 
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.floor
 
-class ScrollListener(val indicator: PageIndicator) : RecyclerView.OnScrollListener() {
+class ScrollListener(private val indicator: PageIndicator) : RecyclerView.OnScrollListener() {
 
     private var midPos = 0
 
@@ -12,7 +13,7 @@ class ScrollListener(val indicator: PageIndicator) : RecyclerView.OnScrollListen
         super.onScrolled(recyclerView, dx, dy)
         scrollX = +dx
         recyclerView.getChildAt(0)?.width?.let {
-            val midPos = Math.floor(((scrollX + it / 2f) / it).toDouble()).toInt()
+            val midPos = floor(((scrollX + it / 2f) / it).toDouble()).toInt()
             if (this.midPos != midPos) {
                 when {
                     this.midPos < midPos -> indicator.swipeNext()

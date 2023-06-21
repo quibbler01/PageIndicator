@@ -2,7 +2,7 @@ package cn.quibbler.pageindicator
 
 import androidx.viewpager.widget.ViewPager
 
-class PageChangeListener(val indicator: PageIndicator) : ViewPager.OnPageChangeListener {
+class PageChangeListener(private val indicator: PageIndicator) : ViewPager.OnPageChangeListener {
 
     var selectedPage: Int = 0
 
