@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     class DemoPageAdapter : PagerAdapter() {
 
-        override fun getCount(): Int = 5
+        override fun getCount(): Int = 15
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val binding = PageItemBinding.inflate(LayoutInflater.from(container.context), container, false)
