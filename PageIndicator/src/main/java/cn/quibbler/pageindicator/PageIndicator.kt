@@ -123,7 +123,7 @@ class PageIndicator constructor(context: Context, attrs: AttributeSet?, defStyle
         )
         animInterpolator =
             AnimationUtils.loadInterpolator(context, a.getResourceId(R.styleable.PageIndicator_piCentered, R.anim.pi_default_interpolator))
-        a?.recycle()
+        a.recycle()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -229,8 +229,8 @@ class PageIndicator constructor(context: Context, attrs: AttributeSet?, defStyle
                         dotSizes[index] = animation.animatedValue as Int
                         invalidate()
                     }
+                    start()
                 }
-                dotAnimators[index].start()
             }
         }
     }

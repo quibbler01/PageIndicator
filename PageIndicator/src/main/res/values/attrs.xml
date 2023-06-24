@@ -23,6 +23,7 @@
         <attr name="piSelectedColor" format="color" />
 
         <attr name="piAnimInterpolator" format="reference" />
+
     </declare-styleable>
 
 </resources>
