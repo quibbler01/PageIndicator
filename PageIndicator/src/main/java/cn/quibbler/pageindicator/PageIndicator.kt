@@ -114,12 +114,10 @@ class PageIndicator constructor(context: Context, attrs: AttributeSet?, defStyle
         animDuration = a.getInteger(R.styleable.PageIndicator_piAnimDuration, DEFAULT_ANIM_DURATION).toLong()
 
         defaultPaint.color = a.getColor(
-            R.styleable.PageIndicator_piDefaultColor,
-            ContextCompat.getColor(getContext(), R.color.pi_default_color)
+            R.styleable.PageIndicator_piDefaultColor, ContextCompat.getColor(getContext(), R.color.pi_default_color)
         )
         selectedPaint.color = a.getColor(
-            R.styleable.PageIndicator_piSelectedColor,
-            ContextCompat.getColor(getContext(), R.color.pi_selected_color)
+            R.styleable.PageIndicator_piSelectedColor, ContextCompat.getColor(getContext(), R.color.pi_selected_color)
         )
         animInterpolator =
             AnimationUtils.loadInterpolator(context, a.getResourceId(R.styleable.PageIndicator_piCentered, R.anim.pi_default_interpolator))
@@ -140,10 +138,7 @@ class PageIndicator constructor(context: Context, attrs: AttributeSet?, defStyle
         paddingStart += (dotSize + dotSpacing) * start
         (start until end).forEach {
             canvas?.drawCircle(
-                paddingStart + dotSize / 2f - scrollAmount,
-                dotSize / 2f,
-                dotSizes[it] / 2f,
-                when (dotManager?.dots?.get(it)) {
+                paddingStart + dotSize / 2f - scrollAmount, dotSize / 2f, dotSizes[it] / 2f, when (dotManager?.dots?.get(it)) {
                     BYTE_6 -> selectedPaint
                     else -> defaultPaint
                 }
@@ -240,5 +235,7 @@ class PageIndicator constructor(context: Context, attrs: AttributeSet?, defStyle
         val end = min(dotManager?.dots?.size ?: 0, (dotManager?.selectedIndex ?: 0) + MOST_VISIBLE_COUNT)
         return Pair(start, end)
     }
+
+
 
 }

@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        binding.pageIndicator.count = 12
+
         binding.pageIndicator.attachTo(binding.viewPager)
     }
 
